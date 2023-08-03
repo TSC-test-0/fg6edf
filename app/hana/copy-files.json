@@ -1,0 +1,8 @@
+{
+  "copyFiles": [
+    {
+        "from": "db/data",
+        "to": "gen/srv/srv/"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+name: Adapt Project
+on:
+  issues:
+    types:
+      - labeled
+      - assigned
+jobs:
+  run-updater:
+    if: ${{ github.event.issue.assignee.login == 'capGPTbot' || github.event.label.name == 'capGPT' }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Trigger project adaption
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
+      run: |
+        curl --request POST --url https://tsc-demo-srv.cfapps.sap.hana.ondemand.com/api/v1/tsc/adaptProject --header 'Content-Type: application/json' --data '{ "issueText": "${{ github.event.issue.body }}", "issueNumber": "${{ github.event.issue.number }}", "repository": "${{ github.server_url }}/${{ github.repository }}", "apiKey": "${{ secrets.API_KEY }}" }'
